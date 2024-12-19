@@ -1,6 +1,7 @@
 # extraction/fetch_data.py
 import requests
 
+
 def fetch_data(api_url):
     """Fetch data from the SpaceX API."""
     try:
