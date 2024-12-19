@@ -1,0 +1,40 @@
+import psycopg2
+from extraction.fetch_data import fetch_data
+from extraction.save_data import save_data_to_file
+import os
+
+
+
+
+
+SPACEX_API_URL = "https://api.spacexdata.com/v4/"
+
+
+def fetch_and_process_data(source_url, table_name, save_path):
+
+    try:
+        full_url = SPACEX_API_URL + source_url
+        data = fetch_data(full_url)
+        save_data_to_file(data, save_path, table_name)
+    except Exception as e:
+        print(f"Error during data processing for {table_name}: {e}")
+
+
+
+def main():
+
+    datasets = [
+        {'table_name': 'launches', 'source_url': 'launches', 'save_path': 'data'},
+        {'table_name': 'payloads', 'source_url': 'payloads', 'save_path': 'data'}
+    ]
+
+
+    for dataset in datasets:
+        table_name = dataset['table_name']
+        source_url = dataset['source_url']
+        save_path = dataset['save_path']
+
+        fetch_and_process_data(source_url, table_name, save_path)
+
+if __name__ == '__main__':
+    main()
